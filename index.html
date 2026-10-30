@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cajero Automatico - Scotiabank</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="atm">
+    <!-- Cabecera marca Scotiabank -->
+    <div class="atm-top">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="#EC111A"><path d="M12 2 L22 12 L12 22 L2 12 Z M12 6 L7 12 L12 18 L17 12 Z"/></svg>
+      </div>
+      <div class="brand">
+        <h1>Scotiabank</h1>
+        <span>CAJERO AUTOMATICO</span>
+      </div>
+    </div>
+
+    <!-- Pantalla -->
+    <div class="screen-wrap">
+      <div class="screen">
+        <div class="screen-header">
+          <div class="title" id="screenTitle">Bienvenido</div>
+          <div class="clock" id="clock">--:--</div>
+        </div>
+
+        <!-- Vista 1: Seleccion de cuenta -->
+        <div class="view active" id="view-accounts">
+          <div class="prompt">Selecciona la cuenta con la que deseas operar:</div>
+          <div class="btn-list" id="accountList"></div>
+        </div>
+
+        <!-- Vista 2: Ingreso de password -->
+        <div class="view" id="view-password">
+          <div class="welcome-user">Cuenta: <b id="pwdUser"></b></div>
+          <div class="prompt">Ingresa tu clave secreta de 4 digitos:</div>
+          <div class="field">
+            <input type="password" id="pwdInput" maxlength="4" inputmode="numeric" placeholder="****" autocomplete="off">
+          </div>
+          <div class="msg" id="pwdMsg"></div>
+          <div class="actions">
+            <button class="action ghost" onclick="volverCuentas()">Cancelar</button>
+            <button class="action primary" onclick="validarPassword()">Aceptar</button>
+          </div>
+        </div>
+
+        <!-- Vista 3: Menu principal -->
+        <div class="view" id="view-menu">
+          <div class="welcome-user">Hola, <b id="menuUser"></b></div>
+          <div class="prompt muted">Selecciona una operacion:</div>
+          <div class="btn-list">
+            <button class="atm-btn" onclick="irConsultar()"><span>1. Consultar saldo</span><span class="sub">&#128179;</span></button>
+            <button class="atm-btn" onclick="irOperacion('ingresar')"><span>2. Ingresar monto</span><span class="sub">&#11014;</span></button>
+            <button class="atm-btn" onclick="irOperacion('retirar')"><span>3. Retirar monto</span><span class="sub">&#128176;</span></button>
+          </div>
+          <div class="actions">
+            <button class="action ghost" onclick="cerrarSesion()">Salir / Cambiar cuenta</button>
+          </div>
+        </div>
+
+        <!-- Vista 4: Consultar saldo -->
+        <div class="view" id="view-saldo">
+          <div class="prompt">Saldo disponible de la cuenta:</div>
+          <div class="balance-box">
+            <div class="label" id="saldoUser"></div>
+            <div class="value" id="saldoValue">$0.00</div>
+          </div>
+          <div class="actions">
+            <button class="action primary" onclick="irMenu()">Volver al menu</button>
+          </div>
+        </div>
+
+        <!-- Vista 5: Operacion (ingresar / retirar) -->
+        <div class="view" id="view-operacion">
+          <div class="prompt" id="opTitle">Ingresa el monto:</div>
+          <div class="field">
+            <label id="opLabel">Monto en soles ($)</label>
+            <input type="number" id="opInput" class="amount-input" min="0" step="0.01" placeholder="0.00" autocomplete="off">
+          </div>
+          <div class="msg" id="opMsg"></div>
+          <div class="actions">
+            <button class="action ghost" onclick="irMenu()">Cancelar</button>
+            <button class="action primary" id="opConfirm" onclick="confirmarOperacion()">Confirmar</button>
+          </div>
+        </div>
+
+        <!-- Vista 6: Resultado de operacion -->
+        <div class="view" id="view-result">
+          <div class="prompt" id="resTitle">Operacion realizada</div>
+          <div class="msg ok show" id="resDetail"></div>
+          <div class="balance-box">
+            <div class="label">Nuevo saldo total</div>
+            <div class="value" id="resSaldo">$0.00</div>
+          </div>
+          <div class="actions">
+            <button class="action primary" onclick="irMenu()">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parte fisica -->
+    <div class="atm-bottom">
+      <div class="slot"></div>
+      <div class="keypad">
+        <button class="key" onclick="tecla('1')">1</button>
+        <button class="key" onclick="tecla('2')">2</button>
+        <button class="key" onclick="tecla('3')">3</button>
+        <button class="key" onclick="tecla('4')">4</button>
+        <button class="key" onclick="tecla('5')">5</button>
+        <button class="key" onclick="tecla('6')">6</button>
+        <button class="key" onclick="tecla('7')">7</button>
+        <button class="key" onclick="tecla('8')">8</button>
+        <button class="key" onclick="tecla('9')">9</button>
+        <button class="key red" onclick="teclaBorrar()">&#9003;</button>
+        <button class="key" onclick="tecla('0')">0</button>
+        <button class="key green" onclick="teclaEnter()">&#9166;</button>
+      </div>
+      <div class="footer-note">SCOTIABANK PERU &bull; SIMULADOR EDUCATIVO</div>
+    </div>
+  </div>
+
+<script src="main.js"></script>
+</body>
+</html>
